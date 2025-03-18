@@ -1,0 +1,4 @@
+venv
+assets
+.sqlite3
+.env
