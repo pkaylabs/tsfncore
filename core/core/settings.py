@@ -23,6 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party apps
+    'corsheaders',
+    'rest_framework',
+    'knox',
+
     # internal apps
     'accounts.apps.AccountsConfig',
     'apis.apps.ApisConfig',
