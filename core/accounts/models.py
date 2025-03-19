@@ -20,6 +20,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=12, unique=True)
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=500, blank=True, null=True)
+    region = models.CharField(max_length=50, null=True, blank=True)
+    district = models.CharField(max_length=50, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
     deleted = models.BooleanField(default=False)  # Soft delete

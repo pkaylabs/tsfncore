@@ -4,7 +4,7 @@ from django.contrib.auth.models import BaseUserManager
 class AccountManager(BaseUserManager):
     '''Manages User account creation'''
 
-    def create_user(self, email, password=None, name=None, phone=None, address=None, **kwargs):
+    def create_user(self, email, password=None, name=None, phone=None, address=None, region=None, district=None, **kwargs):
         '''Create a regular user'''
         if not email:
             raise ValueError('The Email field must be set')
@@ -19,6 +19,8 @@ class AccountManager(BaseUserManager):
             name=name,
             phone=phone,
             address=address,
+            region=region,
+            district=district,
             **kwargs
         )
         user.set_password(password)
@@ -27,7 +29,7 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, name=None, phone=None, address=None, **kwargs):
+    def create_superuser(self, email, password=None, name=None, phone=None, address=None, region=None, district=None, **kwargs):
         '''Create a superuser'''
         if not email:
             raise ValueError('The Email field must be set')
@@ -42,6 +44,8 @@ class AccountManager(BaseUserManager):
             email=email,
             password=password,
             address=address,
+            region=region,
+            district=district,
             **kwargs
         )
         user.is_staff = True

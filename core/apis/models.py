@@ -35,6 +35,12 @@ class Report(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def get_report_images(self):
+        '''get all report images attached to this report'''
+        images = ReportImage.objects.filter(report=self)
+        return [i.image.url for i in images]
+
     def __str__(self):
         return self.school.name + ' - ' + self.created_at.strftime('%Y-%m-%d %H:%M:%S')
     
