@@ -25,6 +25,7 @@ INSTALLED_APPS = [
 
     # internal apps
     'accounts.apps.AccountsConfig',
+    'apis.apps.ApisConfig',
 ]
 
 MIDDLEWARE = [
@@ -107,9 +108,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+MEDIA_URL = '/assets/'
+MEDIA_ROOT = BASE_DIR / "assets"
+
+# Django REST Framework Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
+    ]
+}
+# knox - make token non-expiry
+REST_KNOX = {
+    'TOKEN_TTL': None,
+}
+
+# django cors headers settings
+CORS_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
