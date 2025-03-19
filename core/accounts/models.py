@@ -24,6 +24,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     district = models.CharField(max_length=50, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
+    # notification flags
+    allow_push_notification = models.BooleanField(default=True)
+    allow_submission_alert= models.BooleanField(default=True)
+    allow_general_updates = models.BooleanField(default=True)
+    allow_weekly_reminders = models.BooleanField(default=True)
+
+
     deleted = models.BooleanField(default=False)  # Soft delete
     
     is_active = models.BooleanField(default=True)
