@@ -31,7 +31,7 @@ class Report(models.Model):
 
     # stamps
     reported_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
-    date_of_report = models.DateField()
+    date_of_report = models.DateField(default=None, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
