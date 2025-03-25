@@ -17,3 +17,9 @@ urlpatterns += [
     path('changepassword/', views.ChangePasswordAPIView.as_view(), name='changepassword'),
     path('resetpassword/', views.ResetPasswordAPIView.as_view(), name='resetpassword'),
 ]
+
+
+# reports api endpoints
+urlpatterns += [
+    path('reports/', views.SubmittedReportsAPIView.as_view(), name='reports'),
+]
