@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import OTP, User
-from apis.serializers import (ChangePasswordSerializer, LoginSerializer, RegisterUserSerializer,
+from apis.serializers import (ChangePasswordSerializer, LoginSerializer, RegisterUserSerializer, ResetPasswordSerializer,
                               UserSerializer)
 
 import random
@@ -81,9 +81,10 @@ class VerifyOTPAPI(APIView):
 class RegisterAPI(APIView):
     '''Register api endpoint'''
     permission_classes = (permissions.AllowAny,)
+    serializer_class = RegisterUserSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = RegisterUserSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
         except Exception as e:
@@ -119,18 +120,19 @@ class UserProfileAPIView(APIView):
     '''API endpoint to get and update user profile'''
 
     permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = UserSerializer
 
     def get(self, request, *args, **kwargs):
         '''Get user profile'''
         user = request.user
-        serializer = UserSerializer(user)
+        serializer = self.serializer_class(user)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs):
         '''Update user profile'''
         user = request.user
-        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer = self.serializer_class(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -155,3 +157,29 @@ class ChangePasswordAPIView(APIView):
             return Response({'status': 'success'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
+class ResetPasswordAPIView(APIView):
+    '''API endpoint to reset user password'''
+
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = ResetPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        '''Reset user password'''
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            phone = serializer.data.get('phone')
+            user = User.objects.filter(phone=phone).first()
+            if not user:
+                return Response({'phone': 'User not found.'}, status=status.HTTP_400_BAD_REQUEST)
+            if not user.phone_verified:
+                return Response({'phone': 'Phone not verified.'}, status=status.HTTP_400_BAD_REQUEST)
+            if len(serializer.data.get('new_password')) < 1:
+                return Response({'new_password': 'Password is too short.'}, status=status.HTTP_400_BAD_REQUEST)
+            if not serializer.data.get('new_password') == serializer.data.get('confirm_password'):
+                return Response({'new_password': 'Passwords do not match.'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user.set_password(serializer.data.get('new_password'))
+            user.save()
+            return Response({'status': 'success'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
