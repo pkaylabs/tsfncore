@@ -6,10 +6,13 @@ and their otp information.
 
 '''
 
-from datetime import timedelta, timezone
+from datetime import timedelta
+from django.utils import timezone
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+
+from core.utils.services import send_sms
 
 from .manager import AccountManager
 
@@ -63,11 +66,11 @@ class OTP(models.Model):
         '''Returns True if the OTP is expired'''
         return (self.created_at + timedelta(minutes=30)) < timezone.now()
     
-    def send_otp_to_user(self) -> None:
+    def send_otp(self) -> None:
         '''Send the OTP to the user'''
         msg = f'Welcome to the Transparent School Feeding Network.\nYour OTP is {self.otp}\n\nRegards,\nTSFN Team'
-        # send_mail([self.phone], 'OTP', msg)
+        send_sms(msg, [self.phone])
         print(msg)
 
     def __str__(self):
-        return self.email + ' - ' + self.otp
+        return self.phone + ' - ' + str(self.otp)
