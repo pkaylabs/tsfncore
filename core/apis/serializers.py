@@ -88,3 +88,15 @@ class AddReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    '''Serializer for changing password'''
+    old_password = serializers.CharField()
+    new_password = serializers.CharField()
+    confirm_password = serializers.CharField()
+
+    def validate(self, data):
+        if data.get('new_password') != data.get('confirm_password'):
+            raise serializers.ValidationError("Passwords do not match")
+        return data

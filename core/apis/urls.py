@@ -14,4 +14,5 @@ urlpatterns += [
     path('logout/', views.LogoutAPI.as_view(), name='logout'),
     path('userprofile/', views.UserProfileAPIView.as_view(), name='userprofile'),
     path('verifyotp/', views.VerifyOTPAPI.as_view(), name='verifyotp'),
+    path('changepassword/', views.ChangePasswordAPIView.as_view(), name='changepassword'),
 ]
