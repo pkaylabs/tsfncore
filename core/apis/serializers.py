@@ -73,7 +73,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReportSerializer(serializers.ModelSerializer):
+class GetReportSerializer(serializers.ModelSerializer):
     '''Serializer for the Report model'''
     school = SchoolSerializer()
     reported_by = UserSerializer()
@@ -82,6 +82,13 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = '__all__'
+
+class AddReportSerializer(serializers.ModelSerializer):
+    '''Serializer for the Report model'''
+    class Meta:
+        model = Report
+        fields = '__all__'
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     '''Serializer for changing password'''

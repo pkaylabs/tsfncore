@@ -22,4 +22,5 @@ urlpatterns += [
 # reports api endpoints
 urlpatterns += [
     path('reports/', views.SubmittedReportsAPIView.as_view(), name='reports'),
+    path('dashboard/', views.DashboardAPIView.as_view(), name='dashboard'),
 ]
