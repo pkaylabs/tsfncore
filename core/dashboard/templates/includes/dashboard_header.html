@@ -1,0 +1,112 @@
+{% load static %}
+<!-- Header -->
+<div class="header header-one">
+
+    <!-- Sidebar Toggle -->
+    <a href="javascript:void(0);" id="toggle_btn">
+            <span class="toggle-bars">
+                <span class="bar-icons"></span>
+                <span class="bar-icons"></span>
+                <span class="bar-icons"></span>
+                <span class="bar-icons"></span>
+            </span>
+        </a>
+    <!-- /Sidebar Toggle -->
+
+    <!-- Search -->
+    <div class="top-nav-search">
+        <form>
+            <input type="text" class="form-control" placeholder="Search here">
+            <button class="btn" type="submit"><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></button>
+        </form>
+    </div>
+    <!-- /Search -->
+
+    <!-- Mobile Menu Toggle -->
+    <a class="mobile_btn" id="mobile_btn">
+            <i class="fas fa-bars"></i>
+        </a>
+    <!-- /Mobile Menu Toggle -->
+
+    <!-- Header Menu -->
+    <ul class="nav nav-tabs user-menu">
+        
+        <li class="nav-item dropdown  flag-nav dropdown-heads">
+            <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button">
+                    <i class="fe fe-bell"></i> <span class="badge rounded-pill"></span>
+                </a>
+            <div class="dropdown-menu notifications">
+                <div class="topnav-dropdown-header">
+                    <span class="notification-title">Notifications</span>
+                    <a href="javascript:void(0)" class="clear-noti"> Clear All</a>
+                </div>
+                <div class="noti-content">
+                    <ul class="notification-list">
+                    </ul>
+                </div>
+                <div class="topnav-dropdown-footer">
+                    <a href="">View all Notifications</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item  has-arrow dropdown-heads ">
+            <a href="javascript:void(0);" class="win-maximize">
+                    <i class="fe fe-maximize"></i>
+                </a>
+        </li>
+        <!-- User Menu -->
+        <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="user-link  nav-link" data-bs-toggle="dropdown">
+                    <span class="user-img">
+                        <img src="{% if user.profile_pic %} {{user.profile_pic.url}} {% else %} {% static 'dashboard/assets/img/profiles/profile.png' %} {% endif %}" alt="img" class="profilesidebar">
+                        <span class="animate-circle"></span>
+                    </span>
+                    <span class="user-content">
+                        {% if request.user %}
+                        <span class="user-name">{{request.user.email}}</span>
+                        {% else %}
+                        <span class="user-name">Guest</span>
+                        {% endif %}
+                    </span>
+                </a>
+            <div class="dropdown-menu menu-drop-user">
+                <div class="profilemenu">
+                    <div class="subscription-menu">
+                        <ul>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'dashboard:settings' %}">Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="subscription-logout">
+                        <ul>
+                            <li class="pb-0">
+                                <a class="dropdown-item" href="{% url 'dashboard:logout' %}">Log Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <!-- /User Menu -->
+
+    </ul>
+
+    <!-- /Header Menu -->
+
+    
+{% for message in messages %}
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+<!-- /Header -->
+
+<!-- message -->

@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Add Course Category</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Course Category Form</h5>
+                        <form action="{% url 'dashboard:create_update_category' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="category_id" value="{{category.id}}">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{category.name}}" placeholder="Enter name">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <label>Coordinator's Email</label>
+                                    <input type="email" class="form-control" name="coordinator_email" value="{{category.coordinator_email}}" placeholder="Coordinator's Email">
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <label>Coordinator's Phone</label>
+                                    <input type="text" class="form-control" name="coordinator_phone" value="{{category.coordinator_phone}}" placeholder="Coordinator's Phone">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+{% endblock content %}

@@ -1,0 +1,74 @@
+{% load static %}
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar" style="overflow-y: scroll;">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <a href="{% url 'dashboard:dashboard' %}">
+                    <img class="logo-default" src="{% static 'dashboard/assets/img/pkay-logo-white.png' %}" style="height: 150px;" alt=""/>
+                </a>
+            <a href="{% url 'dashboard:dashboard' %}">
+                    <img src="{% static 'dashboard/assets/img/pkay-logo-white.png' %}" class="img-fluid logo-small" alt="">
+                </a>
+        </div>
+    </div>
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <!-- Main -->
+            <ul>
+                <li class="menu-title"><span>Main</span></li>
+                <li class="">
+                    <a href="{% url 'dashboard:dashboard' %}"><i class="fe fe-home"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                </li>
+            </ul>
+            <!-- /Main -->
+
+            <!-- Customers -->
+            <ul>
+                <li class="menu-title"><span>Management</span></li>
+                <li>
+                    <a href=""><i class="fe fe-users"></i> <span>Reports</span></a>
+                </li>
+                <li>
+                    <a href=""><i class="fe fe-home"></i> <span>Schools</span></a>
+                </li>
+            </ul>
+            <!-- /Customers -->
+
+            <!-- Purchases -->
+            <ul>
+                <li class="menu-title"><span>Notifications</span></li>
+                <li>
+                    <a href=""><i class="fe fe-shopping-cart"></i> <span>Notifications</span></a>
+                </li>
+            </ul>
+            <!-- /Purchases -->
+
+            <!-- User Management -->
+            <ul>
+                <li class="menu-title"><span>User Management</span></li>
+                <li class="submenu">
+                    <a href="#"><i class="fe fe-user"></i> <span> Manage Users</span> <span class="menu-arrow"></span></a>
+                    <ul>
+                        <li><a href="">Users</a></li>
+                        <li><a href="">Groups <i class="badge bg-primary">Soon</i> </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /User Management -->
+
+            <!-- Settings -->
+            <ul>
+                <li class="menu-title"><span>Settings</span></li>
+                <li>
+                    <a href="{% url 'dashboard:settings' %}"><i class="fe fe-settings"></i> <span>Settings</span></a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:logout' %}"><i class="fe fe-power"></i> <span>Logout</span></a>
+                </li>
+            </ul>
+            <!-- /Settings -->
+
+        </div>
+    </div>
+</div>
+<!-- /Sidebar -->

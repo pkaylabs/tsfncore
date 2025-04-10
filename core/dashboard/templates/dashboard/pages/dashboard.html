@@ -1,0 +1,175 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-1">
+                                <i class="fas fa-file-alt"></i>
+                                </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Reports (This week)</div>
+                                <div class="dash-counts">
+                                    <p>{{reports_this_week}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress progress-sm mt-3">
+                            <div class="progress-bar bg-5" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0"> Reports Received This Week</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-2">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Verified Reports (Current)</div>
+                                <div class="dash-counts">
+                                    <p>{{verified_reports_this_week}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress progress-sm mt-3">
+                            <div class="progress-bar bg-6" role="progressbar" style="width: 65%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">Reports Verified This Week</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-3">
+                                    <i class="fas fa-file-alt"></i>
+                                </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Reports (This month)</div>
+                                <div class="dash-counts">
+                                    <p>{{reports_this_month}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress progress-sm mt-3">
+                            <div class="progress-bar bg-7" role="progressbar" style="width: 85%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">Reports Received This Month</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon bg-4">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            <div class="dash-count">
+                                <div class="dash-title">Verified Reports (Month)</div>
+                                <div class="dash-counts">
+                                    <p>{{verified_reports_this_month}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress progress-sm mt-3">
+                            <div class="progress-bar bg-8" role="progressbar" style="width: 45%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="text-muted mt-3 mb-0">Reports Verified This Month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row h-100">
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                    <i class="ri-money-dollar-circle-fill align-middle"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Reports</p>
+                                <h4 class=" mb-0"><span class="counter-value" data-target="2390.68">{{total_reports}}</span></h4>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                    <i class="ri-arrow-up-circle-fill align-middle"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="text-uppercase fw-semibold fs-12 text-muted mb-1"> Total School</p>
+                                <h4 class=" mb-0"><span class="counter-value" data-target="19523.25">{{total_schools}}</span></h4>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-light text-primary rounded-circle fs-3">
+                                    <i class="ri-arrow-down-circle-fill align-middle"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Users</p>
+                                <h4 class=" mb-0"><span class="counter-value" data-target="14799.44">{{total_users}}</span></h4>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div><!-- end col -->
+        </div><!-- end row -->
+
+        <div class="row">
+            <div class="col-xl-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">Reports Analysis</h5>
+
+                            <div class="dropdown main">
+                                <button class="btn btn-white btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Monthly
+                                    </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="reports_chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{ reports_per_month|json_script:"rpm-data" }}
+{{ verified_reports_per_month|json_script:"vrpm-data" }}
+<!-- /Page Wrapper -->
+{% endblock %}
