@@ -6,7 +6,6 @@ from core.utils.contants import ReportStatus
 from core.utils.decorators import StaffLoginRequired
 from django.utils.decorators import method_decorator
 
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
@@ -15,7 +14,17 @@ class ReportView(View):
 
     @method_decorator(StaffLoginRequired)
     def get(self, request):
+        query = request.GET.get('query')
+        print(f"query: {query}")
         reports = Report.objects.all().order_by('-created_at')
+        if query:
+            reports = Report.objects.filter(
+                Q(report_id__icontains=query)|
+                Q(school__name__icontains=query)|
+                Q(meal_type__icontains=query)|
+                Q(comments__icontains=query)|
+                Q(status__icontains=query)
+            ).order_by('-created_at')
         context = {
             'reports': reports,
         }
