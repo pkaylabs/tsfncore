@@ -26,7 +26,7 @@ urlpatterns += [
 urlpatterns += [
     path('reports/', views.ReportView.as_view(), name='reports'),
     path('verify-reports/', views.VerifyReportView.as_view(), name='verify_report'),
-    path('download-reports/', views.ReportView.as_view(), name='download_reports'),
+    path('download-reports/', views.DownloadReportsView.as_view(), name='download_reports'),
 ]
 
 # schools

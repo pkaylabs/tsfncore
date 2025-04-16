@@ -21,7 +21,7 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="d-block">
                                         <li>
-                                            <a class="d-flex align-items-center download-item" href="" download><i class="far fa-file-text me-2"></i>CVS</a>
+                                            <a class="d-flex align-items-center download-item" href="{% url 'dashboard:download_reports' %}" download><i class="far fa-file-text me-2"></i>CSV</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -61,8 +61,8 @@
                     <input type="hidden" name="form_id" value="filter">
                     <div class="row">
                         <div class="col-3">
-                            <label for="category">Report Status</label>
-                            <select name="category" id="category" class="form-control">
+                            <label for="status">Report Status</label>
+                            <select name="status" id="status" class="form-control">
                                 <option value="all">All</option>
                                 <option value="APPROVED">APPROVED</option>
                                 <option value="PENDING REVIEW">PENDING REVIEW</option>
@@ -79,7 +79,6 @@
                             <label for="">Created At</label>
                             <input type="date" class="form-control" name="created_date">
                         </div>
-
 
                         <div class="col-1">
                             <label for="">Filter</label>

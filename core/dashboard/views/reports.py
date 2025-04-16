@@ -1,3 +1,5 @@
+import csv
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from apis.models import Report
@@ -16,6 +18,7 @@ class ReportView(View):
     def get(self, request):
         query = request.GET.get('query')
         print(f"query: {query}")
+        filtered = request.GET.get('form_id') == 'filter'
         reports = Report.objects.all().order_by('-created_at')
         if query:
             reports = Report.objects.filter(
@@ -23,8 +26,25 @@ class ReportView(View):
                 Q(school__name__icontains=query)|
                 Q(meal_type__icontains=query)|
                 Q(comments__icontains=query)|
+                Q(reported_by__name__icontains=query)|
                 Q(status__icontains=query)
             ).order_by('-created_at')
+
+        if filtered:
+            print('Filtered!!')
+            report_status = request.GET.get('status')
+            report_date = request.GET.get('report_date')
+            created_at = request.GET.get('created_date')
+
+            if report_status == '' or str(report_status).upper() == 'ALL':
+                pass
+            else:
+                reports = reports.filter(status=report_status)
+            if report_date:
+                reports = reports.filter(date_of_report=report_date)
+            if created_at:
+                reports = reports.filter(created_at=created_at)
+
         context = {
             'reports': reports,
         }
@@ -65,3 +85,19 @@ class VerifyReportView(View):
         else:
             messages.error(request, "Selected status not allowed")
         return redirect('dashboard:reports')
+    
+
+
+class DownloadReportsView(View):
+    '''Download reports as csv'''
+
+    @method_decorator(StaffLoginRequired)
+    def get(self, request):
+        reports = Report.objects.all()
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="reports.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Report ID', 'School', 'Students Enrolled', 'Students Fed', 'Meal Type', 'Comments', 'Status', 'Reported By', 'Created At']) # noqa
+        for report in reports:
+            writer.writerow([report.report_id, report.school.name, report.students_enrolled, report.students_fed, report.meal_type, report.comments, report.status, report.reported_by.name, report.created_at])
+        return response
