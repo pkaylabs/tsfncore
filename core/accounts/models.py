@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
+from core.utils.contants import ReportStatus
 from core.utils.services import send_sms
 
 from .manager import AccountManager
@@ -25,6 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=500, blank=True, null=True)
     region = models.CharField(max_length=50, null=True, blank=True)
     district = models.CharField(max_length=50, null=True, blank=True)
+    role = models.CharField(max_length=10, default="STAFF")
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
     # notification flags
@@ -33,6 +35,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     allow_general_updates = models.BooleanField(default=True)
     allow_weekly_reminders = models.BooleanField(default=True)
 
+    # preferences
+    prefered_email = models.EmailField(max_length=50, blank=True, null=True)
+    prefered_phone = models.CharField(max_length=12, blank=True, null=True)
 
     deleted = models.BooleanField(default=False)  # Soft delete
     
@@ -51,6 +56,27 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone', 'name']
+
+
+    def reports_submitted(self) -> int:
+        '''gets the total reports submitted by the user'''
+        from apis.models import Report
+        reports = Report.objects.filter(reported_by=self).count()
+        return reports
+    
+    def rejected_reports(self) -> int:
+        '''gets the total reports submitted by the user that are rejected'''
+        from apis.models import Report
+        reports = Report.objects.filter(reported_by=self, status=ReportStatus.REJECTED.value).count()
+        return reports
+    
+    def approved_reports(self) -> int:
+        '''gets the total reports submitted by the user that are approved'''
+        from apis.models import Report
+        reports = Report.objects.filter(reported_by=self, status=ReportStatus.APPROVED.value).count()
+        return reports
+    
+
 
     def __str__(self):
         return self.name

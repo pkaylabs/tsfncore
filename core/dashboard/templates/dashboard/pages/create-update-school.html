@@ -1,0 +1,199 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Add School</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        
+                        <form action="{% url 'dashboard:create_update_school' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="school_id" value="{{school.id}}">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>School Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{school.name}}" placeholder="Enter name of school">
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>School Email</label>
+                                    <input type="email" class="form-control" name="email" value="{{school.email}}" placeholder="Enter email of school">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control" value="{{school.phone}}" placeholder="Enter Phone Number" name="phone">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Region of School</label>
+                                    <select id="region" name="region" class="form-control">
+                                        <option value="">-- Select Region --</option>
+                                        {% for region in regions %}
+                                          <option value="{{ region }}" {% if school.region == region %}selected{% endif %}>{{ region }}</option>
+                                        {% endfor %}
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>District of School</label>
+                                    <select id="district" name="district" class="form-control">
+                                        <option value="">-- Select District --</option>
+                                        {% if school.district %}
+                                          <option value="{{ school.district }}" selected>{{ school.district }}</option>
+                                        {% endif %}
+                                      </select>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Town of School</label>
+                                    <input type="text" class="form-control" name="town" value="{{school.town}}" placeholder="Enter town of school">
+                                </div>
+                            </div>
+                            
+                            <p class="form-title">School Logo</p>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>School Logo</label>
+                                    <input type="file" class="form-control" name="logo" accept="image/*">
+                                </div>
+                            </div>                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="">Actions</label>
+                                <div class="form-group" style="display: block;">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+const districtsByRegion = {
+  "Ahafo": [
+    "Asunafo North", "Asunafo South", "Asutifi North", "Asutifi South", "Tano North", "Tano South"
+  ],
+  "Ashanti": [
+    "Adansi North", "Adansi South", "Afigya-Kwabre North", "Afigya-Kwabre South", "Ahafo Ano North",
+    "Ahafo Ano South East", "Ahafo Ano South West", "Akrofuom", "Amansie Central", "Amansie South",
+    "Amansie West", "Asante Akim Central", "Asante Akim North", "Asante Akim South", "Asokore Mampong",
+    "Atwima Kwanwoma", "Atwima Mponua", "Atwima Nwabiagya North", "Atwima Nwabiagya South", "Bosome Freho",
+    "Bosomtwe", "Bekwai", "Ejisu", "Ejura-Sekyedumase", "Juaben", "Kumasi Metropolitan", "Kwabre East",
+    "Mampong", "Obuasi East", "Obuasi Municipal", "Offinso North", "Offinso South", "Old Tafo", "Oforikrom",
+    "Sekyere Afram Plains", "Sekyere Central", "Sekyere East", "Sekyere Kumawu", "Sekyere South"
+  ],
+  "Bono": [
+    "Berekum East", "Berekum West", "Dormaa Central", "Dormaa East", "Dormaa West",
+    "Jaman North", "Jaman South", "Sunyani", "Sunyani West", "Wenchi"
+  ],
+  "Bono East": [
+    "Atebubu-Amantin", "Kintampo North", "Kintampo South", "Nkoranza North", "Nkoranza South",
+    "Pru East", "Pru West", "Sene East", "Sene West", "Techiman North", "Techiman South"
+  ],
+  "Central": [
+    "Abura/Asebu/Kwamankese", "Agona East", "Agona West", "Ajumako/Enyan/Essiam",
+    "Asikuma-Odoben-Brakwa", "Assin Central", "Assin North", "Assin South", "Awutu Senya", "Awutu Senya East",
+    "Cape Coast Metropolitan", "Effutu", "Ekumfi", "Gomoa Central", "Gomoa East", "Gomoa West",
+    "Komenda-Edina-Eguafo-Abirem", "Mfantsiman", "Twifo-Atti Morkwa", "Twifo Hemang Lower Denkyira", "Upper Denkyira East", "Upper Denkyira West"
+  ],
+  "Eastern": [
+    "Abuakwa North", "Abuakwa South", "Achiase", "Afram Plains North", "Afram Plains South",
+    "Akyemansa", "Asene Manso Akroso", "Asuogyaman", "Atiwa East", "Atiwa West", "Ayensuano", "Birim Central",
+    "Birim North", "Birim South", "Denkyembour", "Fanteakwa North", "Fanteakwa South", "Kwaebibirem",
+    "Kwahu Afram Plains South", "Kwahu East", "Kwahu South", "Kwahu West", "Lower Manya Krobo",
+    "New Juaben North", "New Juaben South", "Nsawam Adoagyiri", "Okere", "Suhum", "Upper Manya Krobo",
+    "Upper West Akim", "West Akim", "Yilo Krobo"
+  ],
+  "Greater Accra": [
+    "Ablekuma Central", "Ablekuma North", "Ablekuma West", "Accra Metropolitan", "Ada East", "Ada West",
+    "Adentan", "Ashaiman", "Ayawaso Central", "Ayawaso East", "Ayawaso North", "Ayawaso West",
+    "Ga Central", "Ga East", "Ga North", "Ga South", "Ga West", "Korle Klottey", "Kpone Katamanso",
+    "La Dade Kotopon", "La Nkwantanang-Madina", "Ledzokuku", "Ningo-Prampram", "Okaikwei North", "Okaikwei South", "Shai Osudoku", "Tema Metropolitan", "Tema West", "Weija-Gbawe"
+  ],
+  "North East": [
+    "Bunkpurugu-Nyankpanduri", "Chereponi", "East Mamprusi", "Mamprugu Moagduri", "West Mamprusi", "Yunyoo-Nasuan"
+  ],
+  "Northern": [
+    "Gushegu", "Karaga", "Kpandai", "Kumbungu", "Mion", "Nanton", "Nanumba North", "Nanumba South",
+    "Saboba", "Sagnarigu", "Savelugu", "Tamale Metropolitan", "Tatale Sanguli", "Tolon", "Yendi", "Zabzugu"
+  ],
+  "Oti": [
+    "Biakoye", "Guan", "Jasikan", "Kadjebi", "Krachi East", "Krachi Nchumuru", "Krachi West", "Nkwanta North", "Nkwanta South"
+  ],
+  "Savannah": [
+    "Bole", "Central Gonja", "East Gonja", "North Gonja", "North East Gonja", "Sawla-Tuna-Kalba", "West Gonja"
+  ],
+  "Upper East": [
+    "Bawku Municipal", "Bawku West", "Binduri", "Bolgatanga East", "Bolgatanga Municipal", "Bongo",
+    "Builsa North", "Builsa South", "Garu", "Kassena-Nankana East", "Kassena-Nankana West", "Nabdam", "Pusiga", "Talensi", "Tempane"
+  ],
+  "Upper West": [
+    "Daffiama-Bussie-Issa", "Jirapa", "Lambussie", "Lawra", "Nadowli-Kaleo", "Nandom",
+    "Sissala East", "Sissala West", "Wa East", "Wa Municipal", "Wa West"
+  ],
+  "Volta": [
+    "Adaklu", "Afadzato South", "Agotime Ziope", "Akatsi North", "Akatsi South", "Anloga", "Central Tongu",
+    "Ho Municipal", "Ho West", "Hohoe Municipal", "Keta Municipal", "Ketu North", "Ketu South", "Kpando Municipal",
+    "North Dayi", "North Tongu", "South Dayi", "South Tongu"
+  ],
+  "Western": [
+    "Ahanta West", "Effia-Kwesimintsim", "Ellembelle", "Jomoro", "Mpohor", "Nzema East", "Prestea-Huni Valley",
+    "Sekondi-Takoradi Metropolitan", "Shama", "Tarkwa-Nsuaem", "Wassa Amenfi Central", "Wassa Amenfi East", "Wassa Amenfi West", "Wassa East"
+  ],
+  "Western North": [
+    "Aowin", "Bia East", "Bia West", "Bodi", "Juaboso", "Sefwi Akontombra", "Sefwi Wiawso", "Suaman"
+  ]
+};
+
+$(document).ready(function() {
+  // Bind change event
+  $('#region').on('change', function() {
+    const region = $(this).val();
+    const districts = districtsByRegion[region] || [];
+
+    const districtSelect = $('#district');
+    districtSelect.empty();
+    districtSelect.append('<option value="">-- Select District --</option>');
+
+    districts.forEach(function(district) {
+      districtSelect.append(`<option value="${district}">${district}</option>`);
+    });
+
+    // Optionally, preselect existing district again if it exists
+    const selectedDistrict = "{{ school.district|escapejs }}";
+    if (selectedDistrict) {
+      districtSelect.val(selectedDistrict);
+    }
+  });
+
+  // Trigger change if region is pre-selected
+  if ($('#region').val()) {
+    $('#region').trigger('change');
+  }
+});
+
+</script>
+
+
+<!-- /Page Wrapper -->
+{% endblock content %}

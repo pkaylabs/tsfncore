@@ -8,7 +8,7 @@
         <!-- Page Header -->
         <div class="page-header">
             <div class="content-page-header ">
-                <h5>Admissions</h5>
+                <h5>Reports</h5>
                 <div class="list-btn">
                     <ul class="filter-list">
                         <li>
@@ -21,7 +21,7 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="d-block">
                                         <li>
-                                            <a class="d-flex align-items-center download-item" href="{% url 'dashboard:download_admissions' %}" download><i class="far fa-file-text me-2"></i>CVS</a>
+                                            <a class="d-flex align-items-center download-item" href="" download><i class="far fa-file-text me-2"></i>CVS</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -29,7 +29,7 @@
                         </li>
                       
                         <li>
-                            <a class="btn btn-primary" href="{% url 'dashboard:give_admission' %}"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>Give Admissions</a>
+                            <a class="btn btn-primary" href=""><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>New Report <i class="badge" style="background-color: yellowgreen;">Soon</i> </a>
                         </li>
                     </ul>
                 </div>
@@ -37,6 +37,67 @@
         </div>
         <!-- /Page Header -->
 
+        <!-- All report -->
+        <div class="card invoices-tabs-card">
+            <div class="invoices-main-tabs">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <div class="invoices-tabs">
+                            <ul>
+                                <li><a href="" class="active">Filter Reports</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /All report -->
+
+        <!-- filter section -->
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="" id="myForm" method="GET" style="display: inline;">
+
+                    <input type="hidden" name="form_id" value="filter">
+                    <div class="row">
+                        <div class="col-3">
+                            <label for="category">Report Status</label>
+                            <select name="category" id="category" class="form-control">
+                                <option value="all">All</option>
+                                <option value="APPROVED">APPROVED</option>
+                                <option value="PENDING REVIEW">PENDING REVIEW</option>
+                                <option value="REJECTED">REJECTED</option>
+                            </select>
+                        </div>
+    
+                        <div class="col-3">
+                            <label for="">Report Date</label>
+                            <input type="date" class="form-control" name="report_date">
+                        </div>
+    
+                        <div class="col-3">
+                            <label for="">Created At</label>
+                            <input type="date" class="form-control" name="created_date">
+                        </div>
+
+
+                        <div class="col-1">
+                            <label for="">Filter</label>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="setFormAction('reports')">Filter</button>
+                        </div>
+                        <div class="col-2">
+                            <label for="">Download</label>
+                            <button type="button" class="btn btn-sm btn-outline-primary" style="display: block;" onclick="setFormAction('download_reports')">Download</button>
+                        </div>
+
+                    </div>
+                    
+                </form>
+
+            </div>
+        </div>
+
+        <hr/>
 
         <!-- Table -->
         <div class="row">
@@ -48,35 +109,37 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th>#</th>
-                                        <th>Admission ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Course</th>
-                                        <th>Fees</th>
+                                        <th>Reporter</th>
+                                        <th>School</th>
+                                        <th>Students Enrolled</th>
+                                        <th>Students Fed</th>
+                                        <th>Meal Type</th>
+                                        <th>Report Status</th>
+                                        <th>Date of Report</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% if admissions %}
-                                    {% for admission in admissions %}
+                                    {% if reports %}
+                                    {% for report in reports %}
                                     <tr>
-                                        <td>{{forloop.counter}}</td>
-                                        <td>{{admission.application.application_id}}</td>
-                                        <td>{{admission.application.name}}</td>
-                                        <td>{{admission.application.email}}</td>
-                                        <td>{{admission.application.phone}}</td>
-                                        <td>{{admission.application.course.title}}</td>
-                                        <td>{{admission.application.course.price}}</td>
-                                        <td>{{admission.created_at}}</td>
+                                        <td>{{report.report_id}}</td>
+                                        <td>{{report.reported_by.name}}</td>
+                                        <td>{{report.school}}</td>
+                                        <td>{{report.students_enrolled}}</td>
+                                        <td>{{report.students_fed}}</td>
+                                        <td>{{report.meal_type}}</td>
+                                        <td><span class="badge bg-{{report.get_color}}">{{report.status}}</span></td>
+                                        <td>{{report.date_of_report}}</td>
+                                        <td>{{report.created_at}}</td>
                                         <td class="d-flex align-items-center">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class=" btn-action-icon " data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <ul>
                                                         <li>
-                                                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                                            <a class="dropdown-item" href="{% url 'dashboard:verify_report' %}?query={{report.report_id}}"><i class="far fa-square-check me-2"></i>View/Verify</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -86,7 +149,7 @@
                                     {% endfor %}
                                     {% else %}
                                     <tr>
-                                        <td colspan="9" class="text-center">No Admissions Found</td>
+                                        <td colspan="11" class="text-center">No Reports Found</td>
                                     </tr>
                                     {% endif %}
                                 </tbody>
@@ -107,7 +170,9 @@
                 <a href="#" class="sidebar-closes"><i class="fa-regular fa-circle-xmark"></i></a>
             </div>
             <div class="sidebar-body">
-                <form action="{% url 'dashboard:admissions' %}" autocomplete="off">
+                <form action="#" autocomplete="off">
+                    <input type="hidden" name="form_id" value="search">
+                    <!-- Product -->
                     <div class="accordion" id="accordionMain1">
                         <div class="card-header-new" id="headingOne">
                             <h6 class="filter-title">
@@ -124,7 +189,7 @@
                                     <div class="col-md-12">
                                         <div id="checkBoxes1">
                                             <div class="form-custom">
-                                                <input type="text" class="form-control" id="member_search1" name="query" placeholder="Search Admissions">
+                                                <input type="text" class="form-control" id="member_search1" name="query" placeholder="Search reports">
                                                 <span><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></span>
                                             </div>
                                         </div>
@@ -134,6 +199,9 @@
                         </div>
 
                     </div>
+                    <!-- /Product -->
+
+                    <!-- /Category -->
 
                     <div class="filter-buttons">
                         <button type="submit" class="d-inline-flex align-items-center justify-content-center btn w-100 btn-primary">
@@ -149,31 +217,21 @@
         </div>
     </div>
     <!-- /Add Asset -->
-
-    <!-- Delete Items Modal -->
-    <div class="modal custom-modal fade" id="delete_modal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="form-header">
-                        <h3>Delete Admission</h3>
-                        <p>Are you sure want to delete?</p>
-                    </div>
-                    <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <button type="reset" data-bs-dismiss="modal" class="w-100 btn btn-primary paid-continue-btn">Delete</button>
-                            </div>
-                            <div class="col-6">
-                                <button type="submit" data-bs-dismiss="modal" class="w-100 btn btn-primary paid-cancel-btn">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /Delete Items Modal -->
+   
 </div>
 <!-- /Page Wrapper -->
+
+
+<script>
+    function setFormAction(action) {
+        if (action == 'download_reports') {
+            window.location.href = "{% url 'dashboard:download_reports' %}?"+ $('#myForm').serialize();
+            return;
+        } else if (action == 'reports') {
+            window.location.href = "{% url 'dashboard:reports' %}?"+ $('#myForm').serialize();
+            return;
+        }
+
+    }
+</script>
 {% endblock %}

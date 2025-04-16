@@ -54,8 +54,8 @@ class PreferenceSettingsView(View):
         user = request.user
         prefered_email = request.POST.get('prefered_email')
         prefered_phone = request.POST.get('prefered_phone')
-        user.prefered_notification_email = prefered_email if prefered_email else None
-        user.prefered_notification_phone = prefered_phone if prefered_phone else None
+        user.prefered_email = prefered_email if prefered_email else None
+        user.prefered_phone = prefered_phone if prefered_phone else None
         user.save()
         messages.success(request, 'Preferences Updated Successfully')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -71,11 +71,11 @@ class ChangeProfilePicView(View):
     @method_decorator(StaffLoginRequired)
     def post(self, request):
         user = request.user
-        profile_pic = request.FILES.get('profile_pic')
+        profile_pic = request.FILES.get('avatar')
         if not profile_pic:
             messages.error(request, 'Please Select a Profile Picture')
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        user.profile_pic = profile_pic
+        user.avatar = profile_pic
         user.save()
         messages.success(request, 'Profile Updated Successfully')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

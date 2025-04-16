@@ -16,8 +16,37 @@ class Command(BaseCommand):
         now = timezone.now()
 
         if not schools or not users:
-            self.stdout.write(self.style.ERROR('Make sure there are some Schools and Users in the database.'))
-            return
+            self.stdout.write(self.style.WARNING('No Schools Found... Creating some schools...'))
+            # Create some schools if none exist
+            names = ['School A', 'School B', 'School C', 'School D', 'School E']
+            regions = ['Region 1', 'Region 2', 'Region 3', 'Region 4', 'Region 5']
+            for i in range(len(names)):
+                name = names[i]
+                region = regions[i % len(regions)]
+                sch = School.objects.create(
+                    name=name,
+                    region=region,
+                    district='District ' + region,
+                    town='Town ' + region,
+                    phone=f'0{i}345678{i}{i+1}',
+                    email=name.replace(" ", "").lower() + '@example.com',
+                )
+                schools.append(sch)
+            self.stdout.write(self.style.SUCCESS(f'Successfully added {len(schools)} schools.'))
+
+            for i in range(5):  # Create 5 users
+                user = User.objects.create_user(
+                    name=f'User {i+1}',
+                    region=random.choice(regions),
+                    district=f'District {random.choice(regions)}',
+                    address=f'Address {i+1}',
+                    phone=f'0{i}123456{i}{i+1}',
+                    email=f'user{i+1}@examples.com',
+                    password='password',  # Set a default password
+                    is_staff=True,  # Set as staff for testing
+                )
+                users.append(user)
+            self.stdout.write(self.style.SUCCESS(f'Successfully added {len(users)} users.'))
 
         report_count = 0
         for month in range(1, 13):  # January to December

@@ -26,10 +26,10 @@
             <ul>
                 <li class="menu-title"><span>Management</span></li>
                 <li>
-                    <a href=""><i class="fe fe-users"></i> <span>Reports</span></a>
+                    <a href="{% url 'dashboard:reports' %}"><i class="fe fe-users"></i> <span>Reports</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fe fe-home"></i> <span>Schools</span></a>
+                    <a href="{% url 'dashboard:schools' %}"><i class="fe fe-home"></i> <span>Schools</span></a>
                 </li>
             </ul>
             <!-- /Customers -->
@@ -49,8 +49,7 @@
                 <li class="submenu">
                     <a href="#"><i class="fe fe-user"></i> <span> Manage Users</span> <span class="menu-arrow"></span></a>
                     <ul>
-                        <li><a href="">Users</a></li>
-                        <li><a href="">Groups <i class="badge bg-primary">Soon</i> </a></li>
+                        <li><a href="{% url 'dashboard:users' %}">Users</a></li>
                     </ul>
                 </li>
             </ul>

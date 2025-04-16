@@ -53,7 +53,7 @@
                             <div class="upload-profile me-2">
                                 <div class="profile-img">
                                     <img id="blah" class="avatar"
-                                        src="{% if user.profile_pic %} {{user.profile_pic.url}} {% else %} {% static 'dashboard/assets/img/profiles/avatar-10.jpg' %} {% endif %} "
+                                        src="{% if user.avatar %} {{user.avatar.url}} {% else %} {% static 'dashboard/assets/img/profiles/avatar-10.jpg' %} {% endif %} "
                                         alt="">
                                 </div>
                             </div>
@@ -61,10 +61,10 @@
                                 <form action="{% url 'dashboard:change_profile_pic' %}" method="POST"
                                     enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <input type="file" class="form-control" name="profile_pic" accept="image/*"
+                                    <input type="file" class="form-control" name="avatar" accept="image/*"
                                         onchange="displayImagePreview(this)">
                                     <img id="image-preview"
-                                        src="{% if user.profile_pic %} {{course.profile_pic.url}} {% endif %} "
+                                        src="{% if user.avatar %} {{user.avatar.url}} {% endif %} "
                                         alt="Image Preview"
                                         style="max-width: 100%; max-height: 150px; margin-top: 10px;">
 

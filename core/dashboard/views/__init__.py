@@ -3,3 +3,4 @@ from .dashboard import *
 from .reports import *
 from .users import *
 from .settings import *
+from .schools import *

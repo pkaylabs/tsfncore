@@ -22,6 +22,10 @@ class School(models.Model):
 
 class Report(models.Model):
     '''Report model'''
+    def generate_report_id():
+        '''generate a unique report id'''
+        return 'RPT-' + str(int(Report.objects.count()) + 1).zfill(8)
+    report_id = models.CharField(max_length=20, default=generate_report_id, unique=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     students_enrolled = models.IntegerField(default=0)
     students_fed = models.IntegerField(default=0)
@@ -40,6 +44,19 @@ class Report(models.Model):
         '''get all report images attached to this report'''
         images = ReportImage.objects.filter(report=self)
         return [i.image.url for i in images]
+    
+    def get_color(self):
+        '''get the color of the report based on the status'''
+        if self.status == ReportStatus.PENDING_REVIEW.value:
+            return 'secondary'
+        elif self.status == ReportStatus.APPROVED.value:
+            return 'primary'
+        elif self.status == ReportStatus.REJECTED.value:
+            return 'danger'
+        else:
+            return 'gray'
+
+
 
     def __str__(self):
         return self.school.name + ' - ' + self.created_at.strftime('%Y-%m-%d %H:%M:%S')

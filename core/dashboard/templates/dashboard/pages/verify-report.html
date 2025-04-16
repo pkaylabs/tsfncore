@@ -1,0 +1,122 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="content-page-header">
+            <h5>Verify Reports</h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div class="form-group-item">
+                        <h5 class="form-title">Report Details</h5>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="report_id" value="{{report.report_id}}">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Report ID</label>
+                                    <input type="text" class="form-control" name="report_id" value="{{report.report_id}}" readonly>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Reported By</label>
+                                    <input type="text" class="form-control" name="reported_by" value="{{report.reported_by.name}}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>School Name</label>
+                                    <input type="text" class="form-control" value="{{report.school.name}}" name="school" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <div class="form-group">
+                                    <label>Students Enrolled</label>
+                                    <input type="text" class="form-control" value="{{report.students_enrolled}}" name="students_enrolled" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label>Students Fed</label>
+                                    <input type="text" class="form-control" value="{{report.students_fed}}" name="students_fed" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Report Date</label>
+                                    <input type="date" class="form-control" value="{{report.date_of_report|date:'Y-m-d'}}" name="date_of_report" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Created At</label>
+                                    <input type="date" class="form-control" value="{{report.created_at|date:'Y-m-d'}}" name="created_at" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Reporter's Comment</label>
+                                    <textarea name="{{comments}}" class="form-control" readonly>{{report.comments}}</textarea>
+                                </div>
+                            </div>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Attachment</label> <br>
+                                    <img id="image-preview" src="{% if report.attachment %} {{report.attachment.url}} {% endif %} " alt="attachment Preview" style="max-width: 100%; max-height: 150px; margin-top: 10px;" >
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="col-6 mb-5">
+                                <p> <b>Report Status</b></p>
+                                <select name="status" class="form-control">
+                                    <option value="APPROVED" {% if report.status == 'APPROVED' %} selected {% endif %} >APPROVED</option>
+                                    <option value="PENDING REVIEW" {% if report.status == 'PENDING REVIEW' %} selected {% endif %} >PENDING REVIEW</option>
+                                    <option value="REJECTED" {% if report.status == 'REJECTED' %} selected {% endif %}>REJECTED</option>
+                                </select>
+                            </div>
+                            <div class="col-6 mb-5">
+                                <p> <b>Last Updated By</b></p>
+                                <input type="text" name="updated_by" class="form-control" value="{{report.updated_by}}" readonly>
+                            </div>
+                            <hr>
+                           
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <input type="reset"  class="btn btn-danger" value="Clear">
+                                    <input type="submit"  class="btn btn-primary" value="Process Report">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Page Wrapper -->
+
+<script>
+    function displayImagePreview(input) {
+        var preview = document.getElementById('image-preview');
+        var file = input.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+{% endblock content %}
