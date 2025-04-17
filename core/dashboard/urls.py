@@ -49,3 +49,10 @@ urlpatterns += [
     path('add-user-to-group/', views.AddUserToGroupsView.as_view(), name='add_user_to_group'), #noqa
     path('add-perm-to-user/', views.AddPermsToUserView.as_view(), name='add_perm_to_user'), #noqa
 ]
+
+
+# notifications
+urlpatterns += [
+    path('notifications/', views.NotificationsView.as_view(), name='notifications'),
+    path('download-notifications/', views.DownloadNotificationsView.as_view(), name='download_notifications')
+]
