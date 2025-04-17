@@ -17,7 +17,7 @@
     <div class="top-nav-search">
         <form>
             <input type="text" class="form-control" placeholder="Search here">
-            <button class="btn" type="submit"><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></button>
+            <button class="btn" type="submit"><img src="{% static 'dashboard/img/icons/search.svg' %}" alt="img"></button>
         </form>
     </div>
     <!-- /Search -->
@@ -58,7 +58,7 @@
         <li class="nav-item dropdown">
             <a href="javascript:void(0)" class="user-link  nav-link" data-bs-toggle="dropdown">
                     <span class="user-img">
-                        <img src="{% if user.avatar %} {{user.avatar.url}} {% else %} {% static 'dashboard/assets/img/profiles/profile.png' %} {% endif %}" alt="img" class="profilesidebar">
+                        <img src="{% if user.avatar %} {{user.avatar.url}} {% else %} {% static 'dashboard/img/profiles/profile.png' %} {% endif %}" alt="img" class="profilesidebar">
                         <span class="animate-circle"></span>
                     </span>
                     <span class="user-content">

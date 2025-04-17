@@ -12,7 +12,7 @@
                 <div class="list-btn">
                     <ul class="filter-list">
                         <li>
-                            <a class="btn btn-filters w-auto popup-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Search"><span class="me-2"><img src="{% static 'dashboard/assets/img/icons/filter-icon.svg' %}" alt="filter"></span>Search </a>
+                            <a class="btn btn-filters w-auto popup-toggle" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Search"><span class="me-2"><img src="{% static 'dashboard/img/icons/filter-icon.svg' %}" alt="filter"></span>Search </a>
                         </li>
 
                         <li class="">
@@ -66,7 +66,7 @@
                                         <td>{{forloop.counter}}</td>
                                         <td>
                                             <div class="avatar avatar-lg">
-                                                <img src="{% if user.avatar %} {{user.avatar.url}} {% else %} {% static 'dashboard/assets/img/profiles/profile.png' %} {% endif %} " alt="Course Image" class="avatar-img rounded-circle">
+                                                <img src="{% if user.avatar %} {{user.avatar.url}} {% else %} {% static 'dashboard/img/profiles/profile.png' %} {% endif %} " alt="Course Image" class="avatar-img rounded-circle">
                                             </div>
                                         </td>
                                         <td>{{user.name}}</td>
@@ -138,7 +138,7 @@
                                         <div id="checkBoxes1">
                                             <div class="form-custom">
                                                 <input type="text" class="form-control" id="member_search1" name="query" placeholder="Search User">
-                                                <span><img src="{% static 'dashboard/assets/img/icons/search.svg' %}" alt="img"></span>
+                                                <span><img src="{% static 'dashboard/img/icons/search.svg' %}" alt="img"></span>
                                             </div>
                                         </div>
                                     </div>
