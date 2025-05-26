@@ -59,7 +59,7 @@ class Report(models.Model):
 
 
     def __str__(self):
-        return self.school.name + ' - ' + self.created_at.strftime('%Y-%m-%d %H:%M:%S')
+        return self.report_id + " - " + self.school.name + ' - ' + self.created_at.strftime('%Y-%m-%d %H:%M:%S')
     
 
 class ReportImage(models.Model):
@@ -71,7 +71,7 @@ class ReportImage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.report
+        return self.report.report_id + ' - ' + self.created_at.strftime('%Y-%m-%d %H:%M:%S')
     
 
 class Notification(models.Model):
