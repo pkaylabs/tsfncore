@@ -14,7 +14,7 @@ class StaffLoginRequired(object):
                 return self.original_method(request, *args, **kwargs)
             else:
                 messages.info(request, "Access Denied!")  # noqa
-                return redirect('accounts:login')
+                return redirect('dashboard:login')
         else:
             messages.info(request, 'Access Denied!')  # noqa
-            return redirect('accounts:login')
+            return redirect('dashboard:login')

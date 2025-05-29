@@ -19,7 +19,7 @@ class ReportView(View):
         query = request.GET.get('query')
         print(f"query: {query}")
         filtered = request.GET.get('form_id') == 'filter'
-        reports = Report.objects.all().order_by('-created_at')
+        reports = Report.objects.all().order_by('created_at')
         if query:
             reports = Report.objects.filter(
                 Q(report_id__icontains=query)|
@@ -28,7 +28,7 @@ class ReportView(View):
                 Q(comments__icontains=query)|
                 Q(reported_by__name__icontains=query)|
                 Q(status__icontains=query)
-            ).order_by('-created_at')
+            ).order_by('created_at')
 
         if filtered:
             print('Filtered!!')

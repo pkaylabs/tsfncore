@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 from accounts.models import User
-from apis.models import Notification, School, Report
+from apis.models import Notification, School, Report, ReportImage
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -85,9 +85,25 @@ class GetReportSerializer(serializers.ModelSerializer):
 
 class AddReportSerializer(serializers.ModelSerializer):
     '''Serializer for the Report model'''
+    images = serializers.ListField(
+        child=serializers.ImageField(),
+        required=False,
+        write_only=True
+    )
+
     class Meta:
         model = Report
         fields = '__all__'
+
+    def create(self, validated_data):
+        images = validated_data.pop('images', [])
+        report = Report.objects.create(**validated_data)
+        
+        # Create ReportImage instances for each uploaded image
+        for image in images:
+            ReportImage.objects.create(report=report, image=image)
+        
+        return report
 
 
 class ChangePasswordSerializer(serializers.Serializer):

@@ -22,9 +22,18 @@ class School(models.Model):
 
 class Report(models.Model):
     '''Report model'''
+
     def generate_report_id():
         '''generate a unique report id'''
-        return 'RPT-' + str(int(Report.objects.count()) + 1).zfill(8)
+        from django.db.models import Max
+        max_id = Report.objects.aggregate(Max('report_id'))['report_id__max']
+        if max_id:
+            # Extract the number part and increment
+            num = int(max_id.split('-')[1]) + 1
+        else:
+            num = 1
+        return 'RPT-' + str(num).zfill(8)
+
     report_id = models.CharField(max_length=20, default=generate_report_id, unique=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     students_enrolled = models.IntegerField(default=0)
