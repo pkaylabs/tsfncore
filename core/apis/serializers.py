@@ -77,7 +77,7 @@ class GetReportSerializer(serializers.ModelSerializer):
     '''Serializer for the Report model'''
     school = SchoolSerializer()
     reported_by = UserSerializer()
-    get_report_images = serializers.ListField(child=serializers.ImageField())
+    get_report_images = serializers.ListField(child=serializers.URLField())
 
     class Meta:
         model = Report

@@ -18,7 +18,7 @@ class SubmittedReportsAPIView(APIView):
             for the currently logged in user
         '''
         user = request.user
-        reports = Report.objects.filter(reported_by=user)
+        reports = Report.objects.filter(reported_by=user).order_by('-created_at')
         serializer = GetReportSerializer(reports, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     

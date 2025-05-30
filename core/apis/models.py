@@ -22,7 +22,6 @@ class School(models.Model):
 
 class Report(models.Model):
     '''Report model'''
-
     def generate_report_id():
         '''generate a unique report id'''
         from django.db.models import Max
@@ -33,8 +32,8 @@ class Report(models.Model):
         else:
             num = 1
         return 'RPT-' + str(num).zfill(8)
-
     report_id = models.CharField(max_length=20, default=generate_report_id, unique=True)
+
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     students_enrolled = models.IntegerField(default=0)
     students_fed = models.IntegerField(default=0)
@@ -53,7 +52,7 @@ class Report(models.Model):
     def get_report_images(self):
         '''get all report images attached to this report'''
         images = ReportImage.objects.filter(report=self)
-        return [i.image.url for i in images]
+        return [i.image.url for i in images if i.image]
     
     def get_color(self):
         '''get the color of the report based on the status'''
