@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Delete Account | Transparent School Feeding Network</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'dashboard/img/tsfn.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'dashboard/plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/plugins/fontawesome/css/all.min.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body class="bg-light">
+    <!-- Main Wrapper -->
+    <div class="min-vh-100 d-flex align-items-center py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="text-center mb-4">
+                        <img class="img-fluid" src="{% static 'dashboard/img/tsfn.png' %}" alt="Logo" style="max-height: 100px;">
+                    </div>
+                    
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible text-center fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                   <center><h3 class="h3 text-center text-primary mb-4">TSFN Mobile App</h3></center>
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4 p-md-5">
+                            
+                            <h1 class="h3 text-center mb-4">Delete Account</h1>
+                            <p class="text-danger text-center mb-4 fw-bold">Caution! This action cannot be undone.</p>
+
+                            <form action="{% url 'dashboard:delete_account' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="mb-4">
+                                    <label class="form-label fw-medium">Email Address</label>
+                                    <input type="email" class="form-control form-control-lg" name="email" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-medium">Phone Number</label>
+                                    <input type="tel" class="form-control form-control-lg" name="phone" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-medium">Full Name</label>
+                                    <input type="text" class="form-control form-control-lg" name="full_name" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-medium">Reason for Deleting Account</label>
+                                    <textarea class="form-control form-control-lg" name="reason" rows="4" required></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="confirm_delete" name="confirm_delete" required>
+                                        <label class="form-check-label" for="confirm_delete">I understand that this action cannot be undone</label>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-3">
+                                    <button class="btn btn-danger btn-lg" type="submit">Delete My Account</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/js/jquery-3.7.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'dashboard/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'dashboard/js/script.js' %}"></script>
+</body>
+</html>

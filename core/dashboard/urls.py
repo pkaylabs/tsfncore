@@ -5,6 +5,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', views.LoginView.as_view(), name='login'),
+    path('auth/delete-account', views.AccountDeletionView.as_view(), name='delete_account'),  #noqa
     path('logout/', views.LogoutView.as_view(), name='logout'),
 ]
 
